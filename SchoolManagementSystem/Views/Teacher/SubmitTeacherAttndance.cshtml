@@ -1,0 +1,89 @@
+﻿@model List<SchoolManagementSystem.Models.TeacherGeneralClass>
+@{
+    
+}
+
+@{
+    ViewBag.Title = "View";
+}
+
+@using (Html.BeginForm())
+{
+
+    @Html.TextBox("SelectedDate", "", new { @readonly = "readonly" ,@placeholder="Select Date"})
+    <button type="submit" class="btn btn-primary">
+        Search 
+    </button>
+}
+
+
+
+@using (@Html.BeginForm("SubmitTeacherAttendancetoDb", "Teacher", FormMethod.Post))
+{ @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+
+                            <th>id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Date</th>
+                            <th>Remarks</th>
+                            <th>Status</th>
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.HiddenFor(model => model[i].teachertbt.t_id)
+                                @i
+                            </td>
+                            <td>@Html.DisplayFor(model => model[i].teachertbt.T_Fname, new { htmlAttributes = new { @readonly = "readonly" } })</td>
+                                <td>@Html.DisplayFor(model => model[i].teachertbt.T_Lname, new { htmlAttributes = new { @readonly = "readonly" } })</td>
+                            <td>@Html.EditorFor(model => model[i].t_Datet, new { htmlAttributes = new { @readonly = "readonly" } })</td>
+
+                            <td>@Html.EditorFor(model => model[i].tRemarkst)</td>
+                            <td>@Html.EditorFor(model => model[i].tstatust)</td>
+
+                        </tr>
+                        }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+        <button type="submit" value="click">click</button>
+
+}
+<script type="text/javascript">
+        $(function () {
+            $("#SelectedDate").datepicker({
+                showOn: 'button',
+                buttonImageOnly: true,
+                buttonText: "Select date",
+                changeMonth:true,
+                changeYear:true,
+                buttonImage: 'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif'
+
+            });
+        });
+</script>
+
+
+   
+   
+   
+  
+

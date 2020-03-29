@@ -1,0 +1,76 @@
+﻿@model List<SchoolManagementSystem.Models.TeacherGeneralClass>
+@{
+    ViewBag.Title = "DisplayTeacherAttendanceDetails";
+}
+
+@using (Html.BeginForm())
+{
+
+    @Html.TextBox("SelectedDate", "", new { @readonly = "readonly", @placeholder = "Select Date" })
+    <button type="submit" class="btn btn-primary">
+        Search
+    </button>
+}
+
+
+<h2>Display Teacher AttendanceDetails</h2>
+<div class="card mb-4">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Date</th>
+                        <th>Remarks</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        for (int i = 0; i < Model.Count(); i++)
+                        {
+                    <tr>
+                        @if (Model[i].teacherAttendenceTbt == null)
+                        {
+                            <td>@i</td>
+                            <td>@Html.DisplayFor(model => model[i].teachertbt.T_Fname)</td>
+                            <td>@Html.DisplayFor(model => model[i].teachertbt.T_Lname)</td>
+                            <td>@Html.DisplayFor(model => model[i].t_Datet)</td>
+                            <td>@Html.DisplayFor(model => model[i].tRemarkst)</td>
+                            <td>@Html.DisplayFor(model => model[i].temstatus)</td>
+                        }
+                        else{ 
+                        <td>@Html.HiddenFor(model => model[i].teacherAttendenceTbt.t_a_id)@i</td>
+                        <td>@Html.DisplayFor(model => model[i].teachertbt.T_Fname)</td>
+                        <td>@Html.DisplayFor(model => model[i].teachertbt.T_Lname)</td>
+                        <td>@Html.DisplayFor(model => model[i].teacherAttendenceTbt.Date)</td>
+                        <td>@Html.DisplayFor(model => model[i].teacherAttendenceTbt.Remarks)</td>
+                        <td>@Html.DisplayFor(model => model[i].teacherAttendenceTbt.AttendenceValue.Status)</td>
+                        }
+                    </tr>
+
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+        $(function () {
+            $("#SelectedDate").datepicker({
+                showOn: 'button',
+                buttonImageOnly: true,
+                buttonText: "Select date",
+                changeMonth:true,
+                changeYear:true,
+                buttonImage: 'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif'
+
+            });
+        });
+</script>

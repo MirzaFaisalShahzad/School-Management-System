@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a6d62b42cad14fe791df257dc43d5f9c" Name="Diagram1">
+        <EntityTypeShape EntityType="SchoolDBModel.ClassTb" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolDBModel.StudentTb" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="SchoolDBModel.FK__StudentTb__c_id__25869641" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SchoolDBModel.AttendenceValue" Width="1.5" PointX="7.375" PointY="1" />
+        <EntityTypeShape EntityType="SchoolDBModel.Attendence" Width="1.5" PointX="5.25" PointY="1.375" />
+        <AssociationConnector Association="SchoolDBModel.FK__Attendenc__Statu__60A75C0F" />
+        <AssociationConnector Association="SchoolDBModel.FK__Attendenc__stude__5CD6CB2B" />
+        <EntityTypeShape EntityType="SchoolDBModel.TeacherTb" Width="1.5" PointX="0.5" PointY="3.75" />
+        <AssociationConnector Association="SchoolDBModel.FK__TeacherTb__t_Cid__04E4BC85" />
+        <EntityTypeShape EntityType="SchoolDBModel.TeacherAttendenceTb" Width="1.5" PointX="2.75" PointY="5" />
+        <AssociationConnector Association="SchoolDBModel.FK__TeacherAt__teach__0B91BA14" />
+        <AssociationConnector Association="SchoolDBModel.FK__TeacherAt__Statu__151B244E" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

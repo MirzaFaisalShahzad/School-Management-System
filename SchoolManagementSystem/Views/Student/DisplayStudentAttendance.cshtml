@@ -1,0 +1,95 @@
+﻿@model List<SchoolManagementSystem.Models.GeneralClass>
+@{
+    ViewBag.Title = "DisplayStudentAttendance";
+}
+
+<h2>Display Student Attendance</h2>
+@using (Html.BeginForm())
+{
+    <table>
+
+        <tr>
+            <td>Chose Class: @Html.DropDownList("c_id", null, htmlAttributes: new { @class = "form-control" })</td>
+            <td>Chose Date:  @Html.TextBox("selectDate", null, htmlAttributes: new { @class = "form-control" })</td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </td>
+        </tr>
+    </table>
+
+}
+
+@using (Html.BeginForm("DisplayStudentAttendance","Student",FormMethod.Post))
+{
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>First Name</td>
+                            <td>Last Name</td>
+                            <td>Father Name</td>
+                            <td>Date</td>
+                            <td>Remarks</td>
+                            <td>Status</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                        <tr>
+                            @if (Model[i].attendencetb == null)
+                            {
+                                <td>@i</td>
+                                <td>@Html.DisplayFor(model => model[i].studenttb.F_Name)</td>
+                                <td>@Html.DisplayFor(model => model[i].studenttb.L_Name)</td>
+                                <td>@Html.DisplayFor(model => model[i].studenttb.Father_Name)</td>
+                                <td>@Html.DisplayFor(model => model[i].studenttb.s_Date)</td>
+                                <td>@Html.HiddenFor(model => model[i].studenttb.s_remarks)</td>
+                                <td>@Html.DisplayFor(model => model[i].studenttb.temStatus)</td>
+                            }
+                            else
+                            {
+                            <td>@Html.HiddenFor(model => model[i].studenttb.s_id)@i</td>
+                            <td>@Html.DisplayFor(model => model[i].studenttb.F_Name)</td>
+                            <td>@Html.DisplayFor(model => model[i].studenttb.L_Name)</td>
+                            <td>@Html.DisplayFor(model => model[i].studenttb.Father_Name)</td>
+                            <td>@Html.DisplayFor(model => model[i].studenttb.s_Date)</td>
+                            <td>@Html.DisplayFor(model => model[i].studenttb.s_remarks)</td>
+                            <td>@Html.DisplayFor(model => model[i].attendencetb.AttendenceValue.Status)</td>
+                            }
+                        </tr>
+                            }
+                        }
+                    </tbody>
+                        
+                </table>
+             </div>
+         </div>
+   </div>
+    <div>  <button type="submit" class="btn btn-primary">Search</button></div>
+  
+
+}
+
+                    <script type="text/javascript">
+                        $(function () {
+                            $("#selectDate").datepicker({
+                                showOn: 'button',
+                                buttonImageOnly: true,
+                                buttonText: "Select date",
+                                changeMonth: true,
+                                changeYear: true,
+                                buttonImage: 'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif'
+                            });
+                        });
+
+                    </script>
+

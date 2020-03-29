@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SchoolManagementSystem.Models.StudentTb>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    
+    
+        
+    <a href="@Url.Action("AddStudent","Student")" class="btn btn-primary">
+    <span class="spinner-grow spinner-grow-sm">
+    </span>Create New Student</a>
+        
+  
+    <p>
+        @Html.ActionLink("Take Attendence", "TakeAttendence")
+    </p>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.F_Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.L_Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.Father_Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.DOB)</th>
+                            <th>@Html.DisplayNameFor(model => model.Phone)</th>
+                            <th>@Html.DisplayNameFor(model => model.ClassName)</th>
+                            <th>Action Buttons</th>
+
+
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.F_Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.L_Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.Father_Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.DOB)</th>
+                            <th>@Html.DisplayNameFor(model => model.Phone)</th>
+                            <th>@Html.DisplayNameFor(model => model.ClassName)</th>
+                        </tr>
+                    </tfoot>
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@Html.DisplayFor(model => item.F_Name)</td>
+                                <td>@Html.DisplayFor(model => item.L_Name)</td>
+                                <td>@Html.DisplayFor(model => item.Father_Name)</td>
+                                <td>@Html.DisplayFor(model => item.DOB)</td>
+                                <td>@Html.DisplayFor(model => item.Phone)</td>
+                                <td>@Html.DisplayFor(model => item.ClassName)</td>
+                                <td>
+                                    @Html.ActionLink("Update", "UpdateStudent", new { id = item.s_id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.s_id }) |
+                                    @Html.ActionLink("Delete", "DelStudent", new { id = item.s_id })
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

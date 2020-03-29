@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SchoolDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attendence">
+          <Key>
+            <PropertyRef Name="at_Id" />
+          </Key>
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="studentId" Type="int" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
+          <Property Name="at_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AttendenceValues">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassTb">
+          <Key>
+            <PropertyRef Name="c_id" />
+          </Key>
+          <Property Name="c_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Class_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentTb">
+          <Key>
+            <PropertyRef Name="s_id" />
+          </Key>
+          <Property Name="s_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="F_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="L_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Father_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="bigint" Nullable="false" />
+          <Property Name="c_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeacherAttendenceTb">
+          <Key>
+            <PropertyRef Name="t_a_id" />
+          </Key>
+          <Property Name="t_a_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="teacherId" Type="int" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TeacherTb">
+          <Key>
+            <PropertyRef Name="t_id" />
+          </Key>
+          <Property Name="t_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="T_Fname" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="T_Lname" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="T_DOB" Type="date" Nullable="false" />
+          <Property Name="T_Phone" Type="bigint" Nullable="false" />
+          <Property Name="T_Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="t_Cid" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Attendenc__Statu__60A75C0F">
+          <End Role="AttendenceValues" Type="Self.AttendenceValues" Multiplicity="1" />
+          <End Role="Attendence" Type="Self.Attendence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendenceValues">
+              <PropertyRef Name="a_id" />
+            </Principal>
+            <Dependent Role="Attendence">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attendenc__stude__5CD6CB2B">
+          <End Role="StudentTb" Type="Self.StudentTb" Multiplicity="1" />
+          <End Role="Attendence" Type="Self.Attendence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentTb">
+              <PropertyRef Name="s_id" />
+            </Principal>
+            <Dependent Role="Attendence">
+              <PropertyRef Name="studentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentTb__c_id__25869641">
+          <End Role="ClassTb" Type="Self.ClassTb" Multiplicity="1" />
+          <End Role="StudentTb" Type="Self.StudentTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassTb">
+              <PropertyRef Name="c_id" />
+            </Principal>
+            <Dependent Role="StudentTb">
+              <PropertyRef Name="c_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherAt__Statu__151B244E">
+          <End Role="AttendenceValues" Type="Self.AttendenceValues" Multiplicity="1" />
+          <End Role="TeacherAttendenceTb" Type="Self.TeacherAttendenceTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendenceValues">
+              <PropertyRef Name="a_id" />
+            </Principal>
+            <Dependent Role="TeacherAttendenceTb">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherAt__teach__0B91BA14">
+          <End Role="TeacherTb" Type="Self.TeacherTb" Multiplicity="1" />
+          <End Role="TeacherAttendenceTb" Type="Self.TeacherAttendenceTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeacherTb">
+              <PropertyRef Name="t_id" />
+            </Principal>
+            <Dependent Role="TeacherAttendenceTb">
+              <PropertyRef Name="teacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherTb__t_Cid__04E4BC85">
+          <End Role="ClassTb" Type="Self.ClassTb" Multiplicity="1" />
+          <End Role="TeacherTb" Type="Self.TeacherTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassTb">
+              <PropertyRef Name="c_id" />
+            </Principal>
+            <Dependent Role="TeacherTb">
+              <PropertyRef Name="t_Cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolDBModelStoreContainer">
+          <EntitySet Name="Attendence" EntityType="Self.Attendence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttendenceValues" EntityType="Self.AttendenceValues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassTb" EntityType="Self.ClassTb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentTb" EntityType="Self.StudentTb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherAttendenceTb" EntityType="Self.TeacherAttendenceTb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherTb" EntityType="Self.TeacherTb" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Attendenc__Statu__60A75C0F" Association="Self.FK__Attendenc__Statu__60A75C0F">
+            <End Role="AttendenceValues" EntitySet="AttendenceValues" />
+            <End Role="Attendence" EntitySet="Attendence" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attendenc__stude__5CD6CB2B" Association="Self.FK__Attendenc__stude__5CD6CB2B">
+            <End Role="StudentTb" EntitySet="StudentTb" />
+            <End Role="Attendence" EntitySet="Attendence" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentTb__c_id__25869641" Association="Self.FK__StudentTb__c_id__25869641">
+            <End Role="ClassTb" EntitySet="ClassTb" />
+            <End Role="StudentTb" EntitySet="StudentTb" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherAt__Statu__151B244E" Association="Self.FK__TeacherAt__Statu__151B244E">
+            <End Role="AttendenceValues" EntitySet="AttendenceValues" />
+            <End Role="TeacherAttendenceTb" EntitySet="TeacherAttendenceTb" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherAt__teach__0B91BA14" Association="Self.FK__TeacherAt__teach__0B91BA14">
+            <End Role="TeacherTb" EntitySet="TeacherTb" />
+            <End Role="TeacherAttendenceTb" EntitySet="TeacherAttendenceTb" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherTb__t_Cid__04E4BC85" Association="Self.FK__TeacherTb__t_Cid__04E4BC85">
+            <End Role="ClassTb" EntitySet="ClassTb" />
+            <End Role="TeacherTb" EntitySet="TeacherTb" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ClassTb">
+          <Key>
+            <PropertyRef Name="c_id" />
+          </Key>
+          <Property Name="c_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Class_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="StudentTbs" Relationship="Self.FK__StudentTb__c_id__25869641" FromRole="ClassTb" ToRole="StudentTb" />
+          <NavigationProperty Name="TeacherTbs" Relationship="SchoolDBModel.FK__TeacherTb__t_Cid__04E4BC85" FromRole="ClassTb" ToRole="TeacherTb" />
+        </EntityType>
+        <EntityType Name="StudentTb">
+          <Key>
+            <PropertyRef Name="s_id" />
+          </Key>
+          <Property Name="s_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="F_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="L_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Father_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="Int64" Nullable="false" />
+          <Property Name="c_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClassTb" Relationship="Self.FK__StudentTb__c_id__25869641" FromRole="StudentTb" ToRole="ClassTb" />
+          <NavigationProperty Name="Attendences" Relationship="SchoolDBModel.FK__Attendenc__stude__5CD6CB2B" FromRole="StudentTb" ToRole="Attendence" />
+        </EntityType>
+        <Association Name="FK__StudentTb__c_id__25869641">
+          <End Role="ClassTb" Type="Self.ClassTb" Multiplicity="1" />
+          <End Role="StudentTb" Type="Self.StudentTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassTb">
+              <PropertyRef Name="c_id" />
+            </Principal>
+            <Dependent Role="StudentTb">
+              <PropertyRef Name="c_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ClassTbs" EntityType="Self.ClassTb" />
+          <EntitySet Name="StudentTbs" EntityType="Self.StudentTb" />
+          <AssociationSet Name="FK__StudentTb__c_id__25869641" Association="Self.FK__StudentTb__c_id__25869641">
+            <End Role="ClassTb" EntitySet="ClassTbs" />
+            <End Role="StudentTb" EntitySet="StudentTbs" />
+          </AssociationSet>
+          <EntitySet Name="AttendenceValues" EntityType="SchoolDBModel.AttendenceValue" />
+          <EntitySet Name="Attendences" EntityType="SchoolDBModel.Attendence" />
+          <AssociationSet Name="FK__Attendenc__Statu__60A75C0F" Association="SchoolDBModel.FK__Attendenc__Statu__60A75C0F">
+            <End Role="AttendenceValue" EntitySet="AttendenceValues" />
+            <End Role="Attendence" EntitySet="Attendences" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attendenc__stude__5CD6CB2B" Association="SchoolDBModel.FK__Attendenc__stude__5CD6CB2B">
+            <End Role="StudentTb" EntitySet="StudentTbs" />
+            <End Role="Attendence" EntitySet="Attendences" />
+          </AssociationSet>
+          <EntitySet Name="TeacherTbs" EntityType="SchoolDBModel.TeacherTb" />
+          <AssociationSet Name="FK__TeacherTb__t_Cid__04E4BC85" Association="SchoolDBModel.FK__TeacherTb__t_Cid__04E4BC85">
+            <End Role="ClassTb" EntitySet="ClassTbs" />
+            <End Role="TeacherTb" EntitySet="TeacherTbs" />
+          </AssociationSet>
+          <EntitySet Name="TeacherAttendenceTbs" EntityType="SchoolDBModel.TeacherAttendenceTb" />
+          <AssociationSet Name="FK__TeacherAt__teach__0B91BA14" Association="SchoolDBModel.FK__TeacherAt__teach__0B91BA14">
+            <End Role="TeacherTb" EntitySet="TeacherTbs" />
+            <End Role="TeacherAttendenceTb" EntitySet="TeacherAttendenceTbs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherAt__Statu__151B244E" Association="SchoolDBModel.FK__TeacherAt__Statu__151B244E">
+            <End Role="AttendenceValue" EntitySet="AttendenceValues" />
+            <End Role="TeacherAttendenceTb" EntitySet="TeacherAttendenceTbs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AttendenceValue">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Attendences" Relationship="SchoolDBModel.FK__Attendenc__Statu__60A75C0F" FromRole="AttendenceValue" ToRole="Attendence" />
+          <NavigationProperty Name="TeacherAttendenceTbs" Relationship="SchoolDBModel.FK__TeacherAt__Statu__151B244E" FromRole="AttendenceValue" ToRole="TeacherAttendenceTb" />
+        </EntityType>
+        <EntityType Name="Attendence">
+          <Key>
+            <PropertyRef Name="at_Id" />
+          </Key>
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="studentId" Type="Int32" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="at_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="AttendenceValue" Relationship="SchoolDBModel.FK__Attendenc__Statu__60A75C0F" FromRole="Attendence" ToRole="AttendenceValue" />
+          <NavigationProperty Name="StudentTb" Relationship="SchoolDBModel.FK__Attendenc__stude__5CD6CB2B" FromRole="Attendence" ToRole="StudentTb" />
+        </EntityType>
+        <Association Name="FK__Attendenc__Statu__60A75C0F">
+          <End Type="SchoolDBModel.AttendenceValue" Role="AttendenceValue" Multiplicity="1" />
+          <End Type="SchoolDBModel.Attendence" Role="Attendence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendenceValue">
+              <PropertyRef Name="a_id" />
+            </Principal>
+            <Dependent Role="Attendence">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attendenc__stude__5CD6CB2B">
+          <End Type="SchoolDBModel.StudentTb" Role="StudentTb" Multiplicity="1" />
+          <End Type="SchoolDBModel.Attendence" Role="Attendence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentTb">
+              <PropertyRef Name="s_id" />
+            </Principal>
+            <Dependent Role="Attendence">
+              <PropertyRef Name="studentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeacherTb">
+          <Key>
+            <PropertyRef Name="t_id" />
+          </Key>
+          <Property Name="t_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="T_Fname" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="T_Lname" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="T_DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="T_Phone" Type="Int64" Nullable="false" />
+          <Property Name="T_Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="t_Cid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClassTb" Relationship="SchoolDBModel.FK__TeacherTb__t_Cid__04E4BC85" FromRole="TeacherTb" ToRole="ClassTb" />
+          <NavigationProperty Name="TeacherAttendenceTbs" Relationship="SchoolDBModel.FK__TeacherAt__teach__0B91BA14" FromRole="TeacherTb" ToRole="TeacherAttendenceTb" />
+        </EntityType>
+        <Association Name="FK__TeacherTb__t_Cid__04E4BC85">
+          <End Type="SchoolDBModel.ClassTb" Role="ClassTb" Multiplicity="1" />
+          <End Type="SchoolDBModel.TeacherTb" Role="TeacherTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassTb">
+              <PropertyRef Name="c_id" />
+            </Principal>
+            <Dependent Role="TeacherTb">
+              <PropertyRef Name="t_Cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeacherAttendenceTb">
+          <Key>
+            <PropertyRef Name="t_a_id" />
+          </Key>
+          <Property Name="t_a_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="teacherId" Type="Int32" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TeacherTb" Relationship="SchoolDBModel.FK__TeacherAt__teach__0B91BA14" FromRole="TeacherAttendenceTb" ToRole="TeacherTb" />
+          <NavigationProperty Name="AttendenceValue" Relationship="SchoolDBModel.FK__TeacherAt__Statu__151B244E" FromRole="TeacherAttendenceTb" ToRole="AttendenceValue" />
+        </EntityType>
+        <Association Name="FK__TeacherAt__teach__0B91BA14">
+          <End Type="SchoolDBModel.TeacherTb" Role="TeacherTb" Multiplicity="1" />
+          <End Type="SchoolDBModel.TeacherAttendenceTb" Role="TeacherAttendenceTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeacherTb">
+              <PropertyRef Name="t_id" />
+            </Principal>
+            <Dependent Role="TeacherAttendenceTb">
+              <PropertyRef Name="teacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherAt__Statu__151B244E">
+          <End Type="SchoolDBModel.AttendenceValue" Role="AttendenceValue" Multiplicity="1" />
+          <End Type="SchoolDBModel.TeacherAttendenceTb" Role="TeacherAttendenceTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendenceValue">
+              <PropertyRef Name="a_id" />
+            </Principal>
+            <Dependent Role="TeacherAttendenceTb">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SchoolDBModelStoreContainer" CdmEntityContainer="SchoolDBEntities">
+          <EntitySetMapping Name="ClassTbs">
+            <EntityTypeMapping TypeName="SchoolDBModel.ClassTb">
+              <MappingFragment StoreEntitySet="ClassTb">
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+                <ScalarProperty Name="Class_Name" ColumnName="Class_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentTbs">
+            <EntityTypeMapping TypeName="SchoolDBModel.StudentTb">
+              <MappingFragment StoreEntitySet="StudentTb">
+                <ScalarProperty Name="s_id" ColumnName="s_id" />
+                <ScalarProperty Name="F_Name" ColumnName="F_Name" />
+                <ScalarProperty Name="L_Name" ColumnName="L_Name" />
+                <ScalarProperty Name="Father_Name" ColumnName="Father_Name" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendenceValues">
+            <EntityTypeMapping TypeName="SchoolDBModel.AttendenceValue">
+              <MappingFragment StoreEntitySet="AttendenceValues">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attendences">
+            <EntityTypeMapping TypeName="SchoolDBModel.Attendence">
+              <MappingFragment StoreEntitySet="Attendence">
+                <ScalarProperty Name="at_Id" ColumnName="at_Id" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherTbs">
+            <EntityTypeMapping TypeName="SchoolDBModel.TeacherTb">
+              <MappingFragment StoreEntitySet="TeacherTb">
+                <ScalarProperty Name="t_Cid" ColumnName="t_Cid" />
+                <ScalarProperty Name="T_Address" ColumnName="T_Address" />
+                <ScalarProperty Name="T_Phone" ColumnName="T_Phone" />
+                <ScalarProperty Name="T_DOB" ColumnName="T_DOB" />
+                <ScalarProperty Name="T_Lname" ColumnName="T_Lname" />
+                <ScalarProperty Name="T_Fname" ColumnName="T_Fname" />
+                <ScalarProperty Name="t_id" ColumnName="t_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherAttendenceTbs">
+            <EntityTypeMapping TypeName="SchoolDBModel.TeacherAttendenceTb">
+              <MappingFragment StoreEntitySet="TeacherAttendenceTb">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="teacherId" ColumnName="teacherId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="t_a_id" ColumnName="t_a_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

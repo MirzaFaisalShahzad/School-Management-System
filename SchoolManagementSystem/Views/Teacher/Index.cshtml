@@ -1,0 +1,63 @@
+﻿@model IEnumerable<SchoolManagementSystem.Models.TeacherGeneralClass>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="card mb-4">
+    <div class="card-header">
+    
+    <b>Teachers Detailes</b> 
+    <div style="float:right;">
+        <a href="@Url.Action("AddTeacher","Teacher")" class="btn btn-primary">
+            Add New Teacher
+        </a>
+        <button class="btn btn-primary" >Save PDF</button>
+        <button class="btn btn-primary" >Take Print</button>
+        </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>DOB</th>
+                        <th>Address</th>
+                        <th>Phone No</th>
+                        <th>Class</th>
+                        <th>Action Buttons</th>
+                     </tr>
+                </thead>
+
+               
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@Html.DisplayFor(model => item.t_idt)</td>
+                            <td>@Html.DisplayFor(model => item.T_Fnamet)</td>
+                            <td>@Html.DisplayFor(model => item.T_Lnamet)</td>
+                            <td>@Html.DisplayFor(model => item.T_DOBt)</td>
+                            <td>@Html.DisplayFor(model => item.T_Addresst)</td>
+                            <td>@Html.DisplayFor(model => item.T_Phonet)</td>
+                            <td>@Html.DisplayFor(model => item.ClassNamet)</td>
+                            <td>
+                                @Html.ActionLink("Update", "UpdateTeacher", new { id = item.t_idt }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.t_idt }) |
+                                @Html.ActionLink("Delete", "DelTeacher", new { id = item.t_idt })
+
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+
+
+
+
+

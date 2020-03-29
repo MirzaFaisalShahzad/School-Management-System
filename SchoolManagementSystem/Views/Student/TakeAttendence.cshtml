@@ -1,0 +1,111 @@
+﻿@model  List<SchoolManagementSystem.Models.GeneralClass>
+    
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TakeAttendence</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            Choose Class
+            <div class="col-md-4">
+                @Html.DropDownList("c_id", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("choosedate", null, htmlAttributes: new { @class = "form-control",@readonly="readonly" })
+            </div>
+
+        </div>
+       <button type="submit" class="btn btn-primary">
+                Search Class
+            </button>
+   }
+
+    @using (Html.BeginForm("SubmitAttndence", "Student", FormMethod.Post))
+    {
+        <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Date</th>
+                                <th>Remarks</th>
+                                <th>Status</th>
+                                 
+                            </tr>
+                      </thead>
+
+                                @if (Model != null)
+                                {
+                                    for (int i = 0; i < Model.Count; i++)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.HiddenFor(model => model[i].studenttb.s_id)
+                                            @i
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model[i].studenttb.F_Name, new { htmlAttributes = new { @readonly = "readonly" } })
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model[i].studenttb.L_Name, new { htmlAttributes = new { @readonly = "readonly" } })
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model[i].studenttb.s_Date, new { htmlAttributes = new { @readonly = "readonly" } })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model[i].studenttb.s_remarks)
+                                        </td>
+                                        <td>
+                                            <div class="col-md-4">
+                                                @Html.CheckBoxFor(m => m[i].studenttb.s_Status)
+
+                                            </div>
+                                        </td>
+
+
+
+                                    </tr>
+                                    }
+                                }
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="submit" class="btn btn-default" />
+                            </div>
+                        </div>
+                        }
+        </body>
+
+</html>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#choosedate").datepicker(
+        {
+            showOn: 'button',
+            buttonImageOnly: true,
+            buttonText: "Select date",
+            changeMonth: true,
+            changeYear: true,
+            buttonImage: 'http://jqueryui.com/resources/demos/datepicker/images/calendar.gif'
+        });
+    });
+
+</script>
