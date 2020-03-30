@@ -9,9 +9,10 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace SchoolManagementSystem.Controllers
-{
+{   //comments
     public class StudentController : Controller
     {
+        int to;
         SchoolDBEntities db = new SchoolDBEntities();
         // GET: Student
         public ActionResult Index()
