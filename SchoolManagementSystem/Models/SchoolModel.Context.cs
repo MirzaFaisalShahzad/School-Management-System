@@ -31,5 +31,6 @@ namespace SchoolManagementSystem.Models
         public virtual DbSet<Attendence> Attendences { get; set; }
         public virtual DbSet<TeacherTb> TeacherTbs { get; set; }
         public virtual DbSet<TeacherAttendenceTb> TeacherAttendenceTbs { get; set; }
+        public virtual DbSet<TeacherFeeTb> TeacherFeeTbs { get; set; }
     }
 }

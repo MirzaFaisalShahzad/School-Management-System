@@ -51,6 +51,18 @@
           <Property Name="teacherId" Type="int" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="TeacherFeeTb">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Month" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Salary" Type="bigint" Nullable="false" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="Pending" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="TeacherTb">
           <Key>
             <PropertyRef Name="t_id" />
@@ -123,6 +135,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__TeacherFe__Teach__29221CFB">
+          <End Role="TeacherTb" Type="Self.TeacherTb" Multiplicity="1" />
+          <End Role="TeacherFeeTb" Type="Self.TeacherFeeTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeacherTb">
+              <PropertyRef Name="t_id" />
+            </Principal>
+            <Dependent Role="TeacherFeeTb">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__TeacherTb__t_Cid__04E4BC85">
           <End Role="ClassTb" Type="Self.ClassTb" Multiplicity="1" />
           <End Role="TeacherTb" Type="Self.TeacherTb" Multiplicity="*" />
@@ -141,6 +165,7 @@
           <EntitySet Name="ClassTb" EntityType="Self.ClassTb" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentTb" EntityType="Self.StudentTb" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherAttendenceTb" EntityType="Self.TeacherAttendenceTb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherFeeTb" EntityType="Self.TeacherFeeTb" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherTb" EntityType="Self.TeacherTb" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Attendenc__Statu__60A75C0F" Association="Self.FK__Attendenc__Statu__60A75C0F">
             <End Role="AttendenceValues" EntitySet="AttendenceValues" />
@@ -161,6 +186,10 @@
           <AssociationSet Name="FK__TeacherAt__teach__0B91BA14" Association="Self.FK__TeacherAt__teach__0B91BA14">
             <End Role="TeacherTb" EntitySet="TeacherTb" />
             <End Role="TeacherAttendenceTb" EntitySet="TeacherAttendenceTb" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherFe__Teach__29221CFB" Association="Self.FK__TeacherFe__Teach__29221CFB">
+            <End Role="TeacherTb" EntitySet="TeacherTb" />
+            <End Role="TeacherFeeTb" EntitySet="TeacherFeeTb" />
           </AssociationSet>
           <AssociationSet Name="FK__TeacherTb__t_Cid__04E4BC85" Association="Self.FK__TeacherTb__t_Cid__04E4BC85">
             <End Role="ClassTb" EntitySet="ClassTb" />
@@ -237,6 +266,11 @@
             <End Role="AttendenceValue" EntitySet="AttendenceValues" />
             <End Role="TeacherAttendenceTb" EntitySet="TeacherAttendenceTbs" />
           </AssociationSet>
+          <EntitySet Name="TeacherFeeTbs" EntityType="SchoolDBModel.TeacherFeeTb" />
+          <AssociationSet Name="FK__TeacherFe__Teach__29221CFB" Association="SchoolDBModel.FK__TeacherFe__Teach__29221CFB">
+            <End Role="TeacherTb" EntitySet="TeacherTbs" />
+            <End Role="TeacherFeeTb" EntitySet="TeacherFeeTbs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AttendenceValue">
           <Key>
@@ -296,6 +330,7 @@
           <Property Name="t_Cid" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ClassTb" Relationship="SchoolDBModel.FK__TeacherTb__t_Cid__04E4BC85" FromRole="TeacherTb" ToRole="ClassTb" />
           <NavigationProperty Name="TeacherAttendenceTbs" Relationship="SchoolDBModel.FK__TeacherAt__teach__0B91BA14" FromRole="TeacherTb" ToRole="TeacherAttendenceTb" />
+          <NavigationProperty Name="TeacherFeeTbs" Relationship="SchoolDBModel.FK__TeacherFe__Teach__29221CFB" FromRole="TeacherTb" ToRole="TeacherFeeTb" />
         </EntityType>
         <Association Name="FK__TeacherTb__t_Cid__04E4BC85">
           <End Type="SchoolDBModel.ClassTb" Role="ClassTb" Multiplicity="1" />
@@ -342,6 +377,31 @@
             </Principal>
             <Dependent Role="TeacherAttendenceTb">
               <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeacherFeeTb">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Month" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Salary" Type="Int64" Nullable="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="Pending" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="TeacherTb" Relationship="SchoolDBModel.FK__TeacherFe__Teach__29221CFB" FromRole="TeacherFeeTb" ToRole="TeacherTb" />
+        </EntityType>
+        <Association Name="FK__TeacherFe__Teach__29221CFB">
+          <End Type="SchoolDBModel.TeacherTb" Role="TeacherTb" Multiplicity="1" />
+          <End Type="SchoolDBModel.TeacherFeeTb" Role="TeacherFeeTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeacherTb">
+              <PropertyRef Name="t_id" />
+            </Principal>
+            <Dependent Role="TeacherFeeTb">
+              <PropertyRef Name="TeacherId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -412,6 +472,19 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="t_a_id" ColumnName="t_a_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherFeeTbs">
+            <EntityTypeMapping TypeName="SchoolDBModel.TeacherFeeTb">
+              <MappingFragment StoreEntitySet="TeacherFeeTb">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Pending" ColumnName="Pending" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

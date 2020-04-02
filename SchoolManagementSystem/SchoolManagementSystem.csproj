@@ -250,6 +250,9 @@
     <Compile Include="Models\TeacherAttendenceTb.cs">
       <DependentUpon>SchoolModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TeacherFeeTb.cs">
+      <DependentUpon>SchoolModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TeacherGeneralClass.cs" />
     <Compile Include="Models\TeacherTb.cs">
       <DependentUpon>SchoolModel.tt</DependentUpon>
@@ -288,6 +291,10 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Student\DisplayStudentAttendance.cshtml" />
+    <Content Include="Views\Teacher\TeacherSalaryDisplay.cshtml" />
+    <Content Include="Views\Teacher\PayTeacherSalary.cshtml" />
+    <Content Include="Views\Teacher\ShowTeacherSalaryDetails.cshtml" />
+    <Content Include="Views\Teacher\UpdateTeacherSalaryTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

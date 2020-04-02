@@ -18,6 +18,7 @@ namespace SchoolManagementSystem.Models
         public TeacherTb()
         {
             this.TeacherAttendenceTbs = new HashSet<TeacherAttendenceTb>();
+            this.TeacherFeeTbs = new HashSet<TeacherFeeTb>();
         }
     
         public int t_id { get; set; }
@@ -31,5 +32,7 @@ namespace SchoolManagementSystem.Models
         public virtual ClassTb ClassTb { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeacherAttendenceTb> TeacherAttendenceTbs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeacherFeeTb> TeacherFeeTbs { get; set; }
     }
 }

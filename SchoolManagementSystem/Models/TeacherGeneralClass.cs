@@ -6,8 +6,38 @@ using System.Web;
 
 namespace SchoolManagementSystem.Models
 {
+   
     public class TeacherGeneralClass
     {
+        public enum months
+        {
+            Jan,
+            Feb,
+            March,
+            April,
+            May,
+            June,
+            Julay,
+            August,
+            September,
+            October,
+            November,
+            December
+        };
+        public enum SalaryStatus
+        {
+            paid,
+            Unpaid
+        }
+       // public months month { get; set; }
+        public string fMonth { get; set; }
+        public long fSalary { get; set; }
+        public int fTeacherId { get; set; }
+        public long fPending { get; set; }
+        public string fStatus { get; set; }
+        public SalaryStatus fStatusenum { get; set; }
+        public System.DateTime fDate { get; set; }
+
         public int t_idt { get; set; }
         public string T_Fnamet { get; set; }
         public string T_Lnamet { get; set; }
@@ -25,6 +55,7 @@ namespace SchoolManagementSystem.Models
        
         public TeacherTb teachertbt { get; set; }
         public TeacherAttendenceTb teacherAttendenceTbt { get; set; }
+        public TeacherFeeTb teacherFeetb { get; set; }
        
     }
 }

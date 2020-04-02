@@ -1,0 +1,102 @@
+﻿@model List<SchoolManagementSystem.Models.TeacherGeneralClass>
+@{
+    ViewBag.Title = "TeacherSalaryDisplay";
+}
+
+<h2>Teacher Salary Display</h2>
+
+@using (Html.BeginForm())
+{
+    /*  for (int i = 0; i < Model.Count; i++)
+      {
+
+          @Html.EnumDropDownListFor(x => x[i].month,
+      "Select My Type",
+      new { @class = "form-control" })<br>
+      }
+      */
+   
+
+   // @Html.DropDownList("months", new SelectList(Enum.GetValues(typeof(SchoolManagementSystem.Models.TeacherGeneralClass.months))), " Select Month", new { @class = "form-control" })
+    <br>
+    
+    <div>
+        @Html.TextBox("fs",null,htmlAttributes: new { @class="datepicker" ,@placeholder="Select Month and Year"})
+    </div>
+    <br>
+   
+    <button type="submit" class="btn btn-primary">Search</button>
+
+
+}
+
+@using (Html.BeginForm())
+{
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Month/Year</th>
+                            <th>Salary Status</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                        <tr>
+                            <td>@Html.HiddenFor(model=>model[i].teachertbt.t_id)@i</td>
+                            <td>@Html.DisplayFor(model => model[i].teachertbt.T_Fname)</td>
+                            <td>@Html.DisplayFor(model=>model[i].teachertbt.T_Lname)</td>
+                            <td>@Html.DisplayFor(model => model[i].fMonth)</td>
+                           
+                            <td>@Html.DisplayFor(model=>model[i].fStatus) |
+                               @if(Model[i].fStatus=="Pending")
+                                {
+                                   @Html.ActionLink("Update","PayTeacherSalary",new {id=Model[i].teachertbt.t_id})
+
+                                }
+                            </td>
+                            
+                        </tr>
+                            }
+                        }
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+
+                        }
+<style type='text/css'>
+    /* Style to hide Dates / Months */
+    .ui-datepicker-calendar, .ui-datepicker-day {
+        display: none;
+    }
+
+
+</style>
+
+<script type='text/javascript'>
+  $(function(){
+      $('.datepicker').datepicker({
+          changeMonth: true,
+          changeYear: true,
+          showButtonPanel: true,
+          dateFormat: 'MM/yy',
+          onClose: function (dateText, inst) {
+              $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+          }
+      });
+  });
+
+</script>

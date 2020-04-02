@@ -14,9 +14,11 @@
         <AssociationConnector Association="SchoolDBModel.FK__Attendenc__stude__5CD6CB2B" />
         <EntityTypeShape EntityType="SchoolDBModel.TeacherTb" Width="1.5" PointX="0.5" PointY="3.75" />
         <AssociationConnector Association="SchoolDBModel.FK__TeacherTb__t_Cid__04E4BC85" />
-        <EntityTypeShape EntityType="SchoolDBModel.TeacherAttendenceTb" Width="1.5" PointX="2.75" PointY="5" />
+        <EntityTypeShape EntityType="SchoolDBModel.TeacherAttendenceTb" Width="1.5" PointX="5.125" PointY="4" />
         <AssociationConnector Association="SchoolDBModel.FK__TeacherAt__teach__0B91BA14" />
         <AssociationConnector Association="SchoolDBModel.FK__TeacherAt__Statu__151B244E" />
+        <EntityTypeShape EntityType="SchoolDBModel.TeacherFeeTb" Width="1.5" PointX="2.75" PointY="5" />
+        <AssociationConnector Association="SchoolDBModel.FK__TeacherFe__Teach__29221CFB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -33,7 +33,6 @@ namespace SchoolManagementSystem.Models
         public string ClassName { get; set; }
         public System.DateTime s_Date { get; set; }
         public string s_remarks { get; set; }
-
         public virtual ClassTb ClassTb { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendence> Attendences { get; set; }
