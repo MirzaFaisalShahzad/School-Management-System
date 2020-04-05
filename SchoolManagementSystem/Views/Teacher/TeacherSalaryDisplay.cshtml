@@ -43,7 +43,11 @@
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Month/Year</th>
+                            <th>Salary</th>
+                            <th>Pending</th>
                             <th>Salary Status</th>
+                            <th>Action</th>
+
                             
                         </tr>
                     </thead>
@@ -57,14 +61,10 @@
                             <td>@Html.DisplayFor(model => model[i].teachertbt.T_Fname)</td>
                             <td>@Html.DisplayFor(model=>model[i].teachertbt.T_Lname)</td>
                             <td>@Html.DisplayFor(model => model[i].fMonth)</td>
-                           
-                            <td>@Html.DisplayFor(model=>model[i].fStatus) |
-                               @if(Model[i].fStatus=="Pending")
-                                {
-                                   @Html.ActionLink("Update","PayTeacherSalary",new {id=Model[i].teachertbt.t_id})
-
-                                }
-                            </td>
+                            <td>@Html.DisplayFor(model => model[i].fSalary)</td>
+                            <td>@Html.DisplayFor(model => model[i].fPending)</td>
+                            <td class="changeColor">@Html.DisplayFor(model=>model[i].fStatus)</td>
+                            <td>@Html.ActionLink("Update", "PayTeacherSalary", new { id = Model[i].teachertbt.t_id })</td>
                             
                         </tr>
                             }
@@ -99,4 +99,13 @@
       });
   });
 
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.changeColor:contains("paid")').css('background', 'green');
+        $('.changeColor:contains("Uppaid")').css('background', 'red');
+        $('.changeColor:contains("paid")').css('color', 'white');
+        $('.changeColor:contains("Unpaid")').css('color', 'white');
+    });
 </script>

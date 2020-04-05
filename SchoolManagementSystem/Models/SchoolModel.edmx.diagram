@@ -19,6 +19,8 @@
         <AssociationConnector Association="SchoolDBModel.FK__TeacherAt__Statu__151B244E" />
         <EntityTypeShape EntityType="SchoolDBModel.TeacherFeeTb" Width="1.5" PointX="2.75" PointY="5" />
         <AssociationConnector Association="SchoolDBModel.FK__TeacherFe__Teach__29221CFB" />
+        <EntityTypeShape EntityType="SchoolDBModel.StudentFeeTb" Width="1.5" PointX="5.25" PointY="7.25" />
+        <AssociationConnector Association="SchoolDBModel.FK__StudentFe__Stude__2BFE89A6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

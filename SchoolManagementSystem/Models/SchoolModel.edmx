@@ -29,6 +29,18 @@
           <Property Name="c_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Class_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="StudentFeeTb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Month" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Salary" Type="bigint" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="Pending" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="StudentTb">
           <Key>
             <PropertyRef Name="s_id" />
@@ -99,6 +111,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__StudentFe__Stude__2BFE89A6">
+          <End Role="StudentTb" Type="Self.StudentTb" Multiplicity="1" />
+          <End Role="StudentFeeTb" Type="Self.StudentFeeTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentTb">
+              <PropertyRef Name="s_id" />
+            </Principal>
+            <Dependent Role="StudentFeeTb">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__StudentTb__c_id__25869641">
           <End Role="ClassTb" Type="Self.ClassTb" Multiplicity="1" />
           <End Role="StudentTb" Type="Self.StudentTb" Multiplicity="*" />
@@ -163,6 +187,7 @@
           <EntitySet Name="Attendence" EntityType="Self.Attendence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AttendenceValues" EntityType="Self.AttendenceValues" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClassTb" EntityType="Self.ClassTb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentFeeTb" EntityType="Self.StudentFeeTb" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentTb" EntityType="Self.StudentTb" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherAttendenceTb" EntityType="Self.TeacherAttendenceTb" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherFeeTb" EntityType="Self.TeacherFeeTb" Schema="dbo" store:Type="Tables" />
@@ -174,6 +199,10 @@
           <AssociationSet Name="FK__Attendenc__stude__5CD6CB2B" Association="Self.FK__Attendenc__stude__5CD6CB2B">
             <End Role="StudentTb" EntitySet="StudentTb" />
             <End Role="Attendence" EntitySet="Attendence" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentFe__Stude__2BFE89A6" Association="Self.FK__StudentFe__Stude__2BFE89A6">
+            <End Role="StudentTb" EntitySet="StudentTb" />
+            <End Role="StudentFeeTb" EntitySet="StudentFeeTb" />
           </AssociationSet>
           <AssociationSet Name="FK__StudentTb__c_id__25869641" Association="Self.FK__StudentTb__c_id__25869641">
             <End Role="ClassTb" EntitySet="ClassTb" />
@@ -222,6 +251,7 @@
           <Property Name="c_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ClassTb" Relationship="Self.FK__StudentTb__c_id__25869641" FromRole="StudentTb" ToRole="ClassTb" />
           <NavigationProperty Name="Attendences" Relationship="SchoolDBModel.FK__Attendenc__stude__5CD6CB2B" FromRole="StudentTb" ToRole="Attendence" />
+          <NavigationProperty Name="StudentFeeTbs" Relationship="SchoolDBModel.FK__StudentFe__Stude__2BFE89A6" FromRole="StudentTb" ToRole="StudentFeeTb" />
         </EntityType>
         <Association Name="FK__StudentTb__c_id__25869641">
           <End Role="ClassTb" Type="Self.ClassTb" Multiplicity="1" />
@@ -270,6 +300,11 @@
           <AssociationSet Name="FK__TeacherFe__Teach__29221CFB" Association="SchoolDBModel.FK__TeacherFe__Teach__29221CFB">
             <End Role="TeacherTb" EntitySet="TeacherTbs" />
             <End Role="TeacherFeeTb" EntitySet="TeacherFeeTbs" />
+          </AssociationSet>
+          <EntitySet Name="StudentFeeTbs" EntityType="SchoolDBModel.StudentFeeTb" />
+          <AssociationSet Name="FK__StudentFe__Stude__2BFE89A6" Association="SchoolDBModel.FK__StudentFe__Stude__2BFE89A6">
+            <End Role="StudentTb" EntitySet="StudentTbs" />
+            <End Role="StudentFeeTb" EntitySet="StudentFeeTbs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AttendenceValue">
@@ -405,6 +440,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StudentFeeTb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Month" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Salary" Type="Int64" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="Pending" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="StudentTb" Relationship="SchoolDBModel.FK__StudentFe__Stude__2BFE89A6" FromRole="StudentFeeTb" ToRole="StudentTb" />
+        </EntityType>
+        <Association Name="FK__StudentFe__Stude__2BFE89A6">
+          <End Type="SchoolDBModel.StudentTb" Role="StudentTb" Multiplicity="1" />
+          <End Type="SchoolDBModel.StudentFeeTb" Role="StudentFeeTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentTb">
+              <PropertyRef Name="s_id" />
+            </Principal>
+            <Dependent Role="StudentFeeTb">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -485,6 +545,19 @@
                 <ScalarProperty Name="Salary" ColumnName="Salary" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentFeeTbs">
+            <EntityTypeMapping TypeName="SchoolDBModel.StudentFeeTb">
+              <MappingFragment StoreEntitySet="StudentFeeTb">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Pending" ColumnName="Pending" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

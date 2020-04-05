@@ -18,6 +18,7 @@ namespace SchoolManagementSystem.Models
         public StudentTb()
         {
             this.Attendences = new HashSet<Attendence>();
+            this.StudentFeeTbs = new HashSet<StudentFeeTb>();
         }
     
         public int s_id { get; set; }
@@ -27,6 +28,7 @@ namespace SchoolManagementSystem.Models
         public System.DateTime DOB { get; set; }
         public long Phone { get; set; }
         public int c_id { get; set; }
+
         public bool s_Status { get; set; }
         public string temStatus { get; set; }
 
@@ -36,5 +38,7 @@ namespace SchoolManagementSystem.Models
         public virtual ClassTb ClassTb { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendence> Attendences { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentFeeTb> StudentFeeTbs { get; set; }
     }
 }

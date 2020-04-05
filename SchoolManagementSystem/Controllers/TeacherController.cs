@@ -218,9 +218,6 @@ namespace SchoolManagementSystem.Controllers
         [HttpGet]
         public ActionResult TeacherSalaryDisplay()
         {
-            //ViewData["Month"] = new SelectList();
-            
-            
             return View();
         }
         [HttpPost]

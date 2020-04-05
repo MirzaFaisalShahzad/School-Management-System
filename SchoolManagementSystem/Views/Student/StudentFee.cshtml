@@ -1,0 +1,124 @@
+﻿@model List<SchoolManagementSystem.Models.GeneralClass>
+@{
+    ViewBag.Title = "StudentFee";
+}
+
+<h2>Student Fee</h2>
+@using (Html.BeginForm())
+{
+    <div class="form-row">
+
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.Label("Choose Class", htmlAttributes: new { @class = "small mb-1" })
+                @Html.DropDownList("c_id", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.Label("Select Month", htmlAttributes: new { @class = "small mb-1" })
+                @Html.TextBox("sdate", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-1 mb-4"><button type="submit" class="btn btn-primary ">Search</button></div>
+
+}
+
+@using (Html.BeginForm())
+{
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Month/Year</th>
+                            <th>Fee</th>
+                            <th>Pending</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+
+
+                            for (int t = 0; t < Model.Count; t++)
+                            {
+                                <tr class="item1">
+                                    <td>@Html.HiddenFor(model => model[t].studenttb.s_id)@t</td>
+                                    <td>@Html.DisplayFor(model => model[t].studenttb.F_Name)</td>
+                                    <td>@Html.DisplayFor(model => model[t].studenttb.L_Name)</td>
+                                    <td>@Html.DisplayFor(model => model[t].sMonth)</td>
+                                    <td>@Html.DisplayFor(model => model[t].sSalary)</td>
+                                    <td>@Html.DisplayFor(model => model[t].sPending)</td>
+                                  
+                                    
+                                    <td class="ColorChange1">@Html.DisplayFor(model => model[t].sStatus)</td>
+                                    
+                                  
+                                    
+                                    <td>@Html.ActionLink("Update","UpdateStudentFee",new { id=Model[t].studenttb.s_id,tf=Model[t].sMonth })</td>
+
+                                </tr>
+                            }
+                        
+                        }
+                        </tbody>
+                    </table>
+                        
+                </div>
+            </div>
+        </div>
+
+                        }
+
+                        <style type='text/css'>
+                            /* Style to hide Dates / Months */
+                            .ui-datepicker-calendar, .ui-datepicker-day {
+                                display: none;
+                            }
+                        </style>
+
+                        <script type='text/javascript'>
+                            $(function () {
+                                $('#sdate').datepicker({
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    showButtonPanel: true,
+                                    dateFormat: 'MM/yy',
+                                    onClose: function (dateText, inst) {
+                                        $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+                                    }
+                                });
+                            });
+
+                        </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.ColorChange1:contains("paid")').css('background', 'green');
+        $('.ColorChange1:contains("paid")').css('color', 'white');
+        $('.ColorChange1:contains("Unpaid")').css('background', 'red');
+        $('.ColorChange1:contains("Unpaid")').css('color', 'white');
+
+        
+            //$('.ColorChange1').css('background', 'green');
+           // $('.ColorChange2').css('background', 'red');
+            //var v1 = $(this).find('.ColorChange1').text();
+            //var v2 = $(this).find('.ColorChange2').text();
+            
+
+
+           
+            
+        
+       
+    });
+</script>
+

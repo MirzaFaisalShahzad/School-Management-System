@@ -264,5 +264,117 @@ namespace SchoolManagementSystem.Controllers
             con.Close();
 
         }
+
+        [HttpGet]
+        public ActionResult StudentFee()
+        {
+            ViewData["c_id"] = new SelectList(db.ClassTbs, "c_id", "Class_Name");
+            List<GeneralClass> g = new List<GeneralClass>();
+            return View(g);
+        }
+        [HttpPost]
+        public ActionResult StudentFee(int id=0)
+        {
+            ViewData["c_id"] = new SelectList(db.ClassTbs, "c_id", "Class_Name");
+            int cid = Int32.Parse(Request.Form["c_id"].ToString());
+            var dt = Request.Form["sdate"].ToString();
+            List<StudentTb> stu = db.StudentTbs.ToList();
+            List<StudentFeeTb> stf = db.StudentFeeTbs.ToList();
+
+            var data = from s in stu.Where(x => x.c_id == cid)
+                       join sf in stf.Where(x=>x.Month==dt) on s.s_id equals sf.StudentId into table1
+                       from sf in table1.DefaultIfEmpty()
+                       select new GeneralClass { studenttb = s, studentfeetb = sf };
+            List<GeneralClass> g = data.ToList();
+            for (int i=0;i<g.Count();i++)
+            {
+                if(g[i].studentfeetb==null)
+                {
+                   g[i].sMonth=dt;
+                   g[i].sSalary = 0;
+                   g[i].sPending = 0;
+                    g[i].sStatus = "Unpaid";
+
+                }else
+                {
+                    g[i].sMonth = g[i].studentfeetb.Month;
+                    g[i].sSalary = g[i].studentfeetb.Salary;
+                    g[i].sPending = g[i].studentfeetb.Pending;
+                    g[i].sStatus = g[i].studentfeetb.Status;
+                }
+            }
+
+            return View(g);
+        }
+
+        [HttpGet]
+        public ActionResult UpdateStudentFee(int id, string tf)
+        {
+            List<StudentTb> stu = db.StudentTbs.ToList();
+            List<StudentFeeTb> stf = db.StudentFeeTbs.ToList();
+
+            var data = from s in stu.Where(x => x.s_id == id)
+                       join sf in stf.Where(x=>x.Month==tf) on s.s_id equals sf.StudentId into table1
+                       from sf in table1.DefaultIfEmpty()
+                       select new GeneralClass { studenttb = s, studentfeetb = sf };
+            List<GeneralClass> g = data.ToList();
+            for(int i=0;i<g.Count();i++)
+            {
+                if (g[i].studentfeetb == null)
+                {
+                    g[i].sMonth = tf;
+                    g[i].sSalary = 0;
+                    g[i].sPending = 0;
+                    g[i].sStatus = "Unpaid";
+
+                }
+                else
+                {
+                    g[i].sMonth = g[i].studentfeetb.Month;
+                    g[i].sSalary = g[i].studentfeetb.Salary;
+                    g[i].sPending = g[i].studentfeetb.Pending;
+                    g[i].sStatus = g[i].studentfeetb.Status;
+                }
+            }
+            return View(g);
+        }
+        [HttpPost]
+        public ActionResult UpdateStudentFee(List<GeneralClass> g)
+        {
+           foreach(var i in g)
+            {
+                var row = db.StudentFeeTbs.Where(x => x.StudentId.Equals(i.studenttb.s_id)).
+                    Where(x => x.Month.Equals(i.sMonth)).SingleOrDefault();
+                if(row==null)
+                {
+                    StudentFeeTb sturow = new StudentFeeTb();
+                    sturow.Date = DateTime.Now;
+                    sturow.Month = i.sMonth;
+                    sturow.Salary = i.sSalary;
+                    sturow.Pending = i.sPending;
+                    sturow.Status = i.teachergenralclass.fStatusenum.ToString();
+                    sturow.StudentId = i.studenttb.s_id;
+                    db.StudentFeeTbs.Add(sturow);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    DateTime dt = DateTime.Now;
+                    db.Database.ExecuteSqlCommand("sp_UpdateStudentFee @smonth,@ssalary,@sid,@spending,@sststus,@sdate",
+                        new object[]
+                        {
+                            new SqlParameter("@smonth",i.sMonth),
+                            new SqlParameter("@ssalary",i.sSalary),
+                            new SqlParameter("@sid",i.studenttb.s_id),
+                            new SqlParameter("@spending",i.sPending),
+                            new SqlParameter("@sststus",i.teachergenralclass.fStatusenum.ToString()),
+                            new SqlParameter("@sdate",dt)
+                        });
+                }
+
+            }
+
+            return RedirectToAction("StudentFee");
+        }
     }
 }
