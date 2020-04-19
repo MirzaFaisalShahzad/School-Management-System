@@ -241,7 +241,7 @@ namespace SchoolManagementSystem.Controllers
                     tex[i].fMonth = val;
                     tex[i].fSalary =0 ;
                     tex[i].fPending =0 ;
-                    tex[i].fStatus = "Pending";
+                    tex[i].fStatus = "Unpaid";
 
                     
                 }
@@ -260,49 +260,7 @@ namespace SchoolManagementSystem.Controllers
             return View(tex);
         }
 
-        [HttpGet]
-        public ActionResult PayTeacherSalary(int id=0)
-        {
-            List<TeacherTb> tea = db.TeacherTbs.ToList();
-            List<TeacherFeeTb> tfe = db.TeacherFeeTbs.ToList();
-            var data = from t in tea.Where(x=>x.t_id==id)
-                       join tf in tfe on t.t_id equals tf.TeacherId into table1
-                       from tf in table1.DefaultIfEmpty()
-                       select new TeacherGeneralClass { teachertbt = t, teacherFeetb = tf };
-            List<TeacherGeneralClass> tex = data.ToList();
-            for(int i=0;i<tex.Count();i++)
-            {
-                tex[i].T_Fnamet = tex[i].teachertbt.T_Fname;
-                tex[i].T_Lnamet = tex[i].teachertbt.T_Lname;
-                //tex[i].fSalary = long.Parse("");
-                //tex[i].fPending = long.Parse("");
-
-            }
-
-            return View(tex);
-        }
-        [HttpPost]
-        public ActionResult PayTeacherSalary(List<TeacherGeneralClass> t)
-        {
-            foreach (var item in t) {
-                var rowcont = db.TeacherFeeTbs.Where(x => x.TeacherId.Equals(item.teachertbt.t_id))
-                    .Where(x => x.Month.Equals(item.fMonth)).SingleOrDefault();
-                if (rowcont == null)
-                {
-                    TeacherFeeTb teaFeeRow = new TeacherFeeTb();
-                    teaFeeRow.Month = item.fMonth;
-                    teaFeeRow.Salary = item.fSalary;
-                    teaFeeRow.Pending = item.fPending;
-                    teaFeeRow.Status = item.fStatusenum.ToString();
-                    teaFeeRow.TeacherId = item.teachertbt.t_id;
-                    teaFeeRow.Date = DateTime.Now;
-                    db.TeacherFeeTbs.Add(teaFeeRow);
-                    db.SaveChanges();
-                }
-               
-              }                 
-            return View();
-        }
+      
 
         //show all salary details of teachers
         [HttpGet]
@@ -352,24 +310,37 @@ namespace SchoolManagementSystem.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateTeacherSalaryTable(int id)
+        public ActionResult UpdateTeacherSalaryTable(int id,string da)
         {
             List<TeacherTb> tea = db.TeacherTbs.ToList();
             List<TeacherFeeTb> tfe = db.TeacherFeeTbs.ToList();
-            var data = from tf in tfe.Where(x=>x.Id==id)
-                       join t in tea on tf.TeacherId equals t.t_id into table1
-                       from t in table1.DefaultIfEmpty()
-                       select new TeacherGeneralClass { teachertbt = t, teacherFeetb = tf };
+            var data = from t in tea.Where(x => x.t_id == id)
+                       join tf in tfe.Where(x => x.Month == da) on t.t_id equals tf.TeacherId into table1
+                       from tf in table1.DefaultIfEmpty()
+                       select new TeacherGeneralClass { teacherFeetb = tf, teachertbt = t };
             List<TeacherGeneralClass> tex = data.ToList();
+
             for (int i = 0; i < tex.Count(); i++)
             {
-                tex[i].T_Fnamet = tex[i].teachertbt.T_Fname;
-                tex[i].T_Lnamet = tex[i].teachertbt.T_Lname;
-                tex[i].fMonth = tex[i].teacherFeetb.Month;
-                tex[i].fSalary = tex[i].teacherFeetb.Salary ;
-                tex[i].fPending = tex[i].teacherFeetb.Pending;
-               // tex[i].fStatus = tex[i].teacherFeetb.Status;
+                if (tex[i].teacherFeetb != null)
+                {
+                    tex[i].T_Fnamet = tex[i].teachertbt.T_Fname;
+                    tex[i].T_Lnamet = tex[i].teachertbt.T_Lname;
+                    tex[i].fMonth = tex[i].teacherFeetb.Month;
+                    tex[i].fSalary = tex[i].teacherFeetb.Salary;
+                    tex[i].fPending = tex[i].teacherFeetb.Pending;
+                    tex[i].fStatus = tex[i].teacherFeetb.Status;
+                }
+                else
+                {
+                    tex[i].T_Fnamet = tex[i].teachertbt.T_Fname;
+                    tex[i].T_Lnamet = tex[i].teachertbt.T_Lname;
+                    tex[i].fMonth = da;
+                    tex[i].fSalary = 0;
+                    tex[i].fPending = 0;
+                    tex[i].fStatus = "Unpaid";
 
+                }
 
             }
 
@@ -379,21 +350,41 @@ namespace SchoolManagementSystem.Controllers
         public ActionResult UpdateTeacherSalaryTable(List<TeacherGeneralClass> t)
         {
             DateTime d = DateTime.Now;
-            for (int i = 0; i < t.Count(); i++)
+            foreach (var i in t)
             {
-                db.Database.ExecuteSqlCommand("sp_UpdateSalaryTb @id,@s_month,@s_salary,@tid,@s_pending,@s_status,@s_date",
-                    new object[] {
-                    new SqlParameter("@id",t[i].teacherFeetb.Id),
-                    new SqlParameter("@s_month",t[i].fMonth),
-                    new SqlParameter("@s_salary",t[i].fSalary),
-                    new SqlParameter("@tid",t[i].teachertbt.t_id),
-                    new SqlParameter("@s_pending",t[i].fPending),
-                    new SqlParameter("@s_status",t[i].fStatusenum.ToString()),
+                var row = db.TeacherFeeTbs.Where(x => x.TeacherId.Equals(i.teachertbt.t_id)).
+                    Where(x => x.Month.Equals(i.fMonth)).SingleOrDefault();
+                if (row == null)
+                {
+                    TeacherFeeTb tft = new TeacherFeeTb();
+                    tft.Date = d;
+                    tft.Month = i.fMonth;
+                    tft.Pending = i.fPending;
+                    tft.Salary = i.fSalary;
+                    tft.Status = i.fStatusenum.ToString();
+                    tft.TeacherId = i.teachertbt.t_id;
+                    db.TeacherFeeTbs.Add(tft);
+                    db.SaveChanges();
+
+
+                }
+                else
+                {
+
+                    db.Database.ExecuteSqlCommand("sp_UpdateSalaryTb @id,@s_month,@s_salary,@tid,@s_pending,@s_status,@s_date",
+                        new object[] {
+                    new SqlParameter("@id",i.teachertbt.t_id),
+                    new SqlParameter("@s_month",i.fMonth),
+                    new SqlParameter("@s_salary",i.fSalary),
+                    new SqlParameter("@tid",i.teachertbt.t_id),
+                    new SqlParameter("@s_pending",i.fPending),
+                    new SqlParameter("@s_status",i.fStatusenum.ToString()),
                     new SqlParameter("@s_date",d),
 
-                    });
+                        });
+                }
             }
-            return View();
+            return RedirectToAction("TeacherSalaryDisplay");
         }
 
 

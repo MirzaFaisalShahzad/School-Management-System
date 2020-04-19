@@ -50,16 +50,11 @@
                                     <td>@Html.DisplayFor(model => model[i].fMonth)</td>
                                     <td>@Html.DisplayFor(model => model[i].fSalary)</td>
                                     <td>@Html.DisplayFor(model => model[i].fPending)</td>
-                                    <td>@Html.DisplayFor(model => model[i].fStatus)</td>
-                                    @if (Model[i].teacherFeetb != null)
-                                    {
-                                    <td>@Html.HiddenFor(model => model[i].teacherFeetb.Id) @Html.ActionLink("Update", "UpdateTeacherSalaryTable", new { id = Model[i].teacherFeetb.Id })</td>
-                                    }
-                                    else
-                                    {
-                                        <td>N/Y</td>
-                                    }
-
+                                    <td class="changeColor">@Html.DisplayFor(model => model[i].fStatus)</td>
+                                  
+                                    <td> @Html.ActionLink("Update", "UpdateTeacherSalaryTable", new { id = Model[i].teachertbt.t_id,da=Model[i].fMonth })</td>
+                                   
+                                   
 
                             </tr>
                             }
@@ -93,4 +88,13 @@
       });
   });
 
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.changeColor:contains("paid")').css('background', 'green');
+        $('.changeColor:contains("Unpaid")').css('background', 'red');
+        $('.changeColor:contains("paid")').css('color', 'white');
+        $('.changeColor:contains("Unpaid")').css('color', 'white');
+    });
 </script>

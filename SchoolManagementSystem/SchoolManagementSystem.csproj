@@ -295,7 +295,6 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Student\DisplayStudentAttendance.cshtml" />
     <Content Include="Views\Teacher\TeacherSalaryDisplay.cshtml" />
-    <Content Include="Views\Teacher\PayTeacherSalary.cshtml" />
     <Content Include="Views\Teacher\ShowTeacherSalaryDetails.cshtml" />
     <Content Include="Views\Teacher\UpdateTeacherSalaryTable.cshtml" />
     <Content Include="Views\Student\StudentFee.cshtml" />

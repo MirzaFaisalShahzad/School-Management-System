@@ -69,8 +69,10 @@
                         <div class="collapse" id="collapseTeachers" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="@Url.Action("SubmitTeacherAttndance","Teacher")">Take Attendance</a>
                             <a class="nav-link" href="@Url.Action("Index","Teacher")">Teachers Details</a>
-                            <a class="nav-link" href="@Url.Action("DisplayTeacherAttendanceDetails","Teacher")">Teachers Attendance Details</a></nav>
-                        </div>
+                            <a class="nav-link" href="@Url.Action("DisplayTeacherAttendanceDetails","Teacher")">Teachers Attendance Details</a>
+                               </nav>
+                            
+                         </div>
 
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAttendance" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -88,7 +90,8 @@
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseAccounts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="@Url.Action("StudentFee","Student")">Student Fee</a><a class="nav-link" href="layout-sidenav-light.html">Teacher Salary</a></nav>
+                            <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="@Url.Action("StudentFee","Student")">Student Fee</a>
+                            <a class="nav-link" href=@Url.Action("ShowTeacherSalaryDetails", "Teacher")>Teacher Salary</a></nav>
                         </div>
 
                         <div class="sb-sidenav-menu-heading">Interface</div>

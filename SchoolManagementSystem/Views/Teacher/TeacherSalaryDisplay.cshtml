@@ -64,8 +64,13 @@
                             <td>@Html.DisplayFor(model => model[i].fSalary)</td>
                             <td>@Html.DisplayFor(model => model[i].fPending)</td>
                             <td class="changeColor">@Html.DisplayFor(model=>model[i].fStatus)</td>
+                            @if (Model[i].teacherFeetb == null)
+                            {
                             <td>@Html.ActionLink("Update", "PayTeacherSalary", new { id = Model[i].teachertbt.t_id })</td>
-                            
+                            }else
+                            {
+                                <td>Updated</td>
+                            }
                         </tr>
                             }
                         }
@@ -104,8 +109,8 @@
     $(document).ready(function () {
 
         $('.changeColor:contains("paid")').css('background', 'green');
-        $('.changeColor:contains("Uppaid")').css('background', 'red');
-        $('.changeColor:contains("paid")').css('color', 'white');
-        $('.changeColor:contains("Unpaid")').css('color', 'white');
+        $('.changeColor:contains("Unpaid")').css('background', 'red');
+      //  $('.changeColor:contains("paid")').css('color', 'white');
+       // $('.changeColor:contains("Unpaid")').css('color', 'white');
     });
 </script>
